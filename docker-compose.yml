@@ -29,7 +29,7 @@ services:
       retries: 20
 
   gateway:
-    build: ../ordini-e-pagamenti-gateway
+    build: ./gateway
     image: homelesschicken/ordini-e-pagamenti-gateway:0.0.3
     container_name: ordini-pagamenti-gateway-container
     ports:
@@ -58,7 +58,7 @@ services:
         condition: service_healthy
 
   auth:
-    build: ../ordini-e-pagamenti-auth
+    build: ./auth
     image: homelesschicken/ordini-e-pagamenti-auth:0.0.2
     container_name: ordini-pagamenti-auth-container
     #ports:
@@ -80,7 +80,7 @@ services:
       retries: 10
 
   ordini:
-    build: ordini
+    build: ./ordini
     image: homelesschicken/gestione-ordini:0.0.3
     container_name: gestione-ordini-container
     #ports:
@@ -120,7 +120,7 @@ services:
       retries: 10
 
   pagamenti:
-    build: ../gestione-pagamenti-restclient
+    build: ./pagamenti
     image: homelesschicken/gestione-pagamenti:0.0.3
     container_name: gestione-pagamenti-container
     #ports:
