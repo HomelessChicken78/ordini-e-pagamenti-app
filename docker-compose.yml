@@ -104,6 +104,8 @@ services:
         condition: service_started
       amq-broker:
           condition: service_healthy
+    volumes:
+      - loki_logs_volume:/app/logs
     # Healthcheck: quando il container viene tirato su, esegui questo comando all'interno del container stesso, per vedere
     # che stia funzionando correttamente.
     # NOTARE: Siccome siamo all'interno del container, possiamo usare la sua porta interna (8080) e non c'è bisogno
@@ -152,3 +154,4 @@ volumes:
   mysql_volume:
     external: true
     name: mysql_volume
+  loki_logs_volume:
