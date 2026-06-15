@@ -1,0 +1,12 @@
+[submodule "auth"]
+	path = auth
+	url = https://github.com/HomelessChicken78/ordini-e-pagamenti-auth
+[submodule "gateway"]
+	path = gateway
+	url = https://github.com/HomelessChicken78/ordini-e-pagamenti-gateway
+[submodule "ordini"]
+	path = ordini
+	url = https://github.com/HomelessChicken78/gestione-ordini-restclient
+[submodule "pagamenti"]
+	path = pagamenti
+	url = https://github.com/HomelessChicken78/gestione-pagamenti-restclient
