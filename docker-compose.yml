@@ -28,6 +28,47 @@ services:
       timeout: 2s
       retries: 20
 
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml # Dice a Loki di usare la sua config standard interna
+    networks:
+      - ordini-pagamenti
+
+  # Promtail prende dal volume i file di log e li passa a loki. Loki li registra internamente e Grafana usa
+  # Loki per permettere il monitoraggio dei log.
+  # Essenzialmente Promtail si occupa solo da fare da ponte tra i log presenti nel volume e loki
+  promtail:
+    image: grafana/promtail:3.0.0
+    container_name: promtail
+    volumes:
+      # Mettiamo ":ro" (Read Only) perché Promtail deve solo LEGGERE, non cancellare o scrivere log
+      - loki_logs_volume:/var/log/apps:ro
+
+      # Usiamo un binding mount per usare le configurazioni locali nel container
+      - ./promtail:/etc/promtail
+    networks:
+      - ordini-pagamenti
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "4567:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    networks:
+      - ordini-pagamenti
+    volumes:
+      - grafana_volume:/var/lib/grafana # Serve a Grafana per ricordarsi i grafici che crei se lo spegni
+    depends_on:
+      - loki
+
   gateway:
     build: ./gateway
     image: homelesschicken/ordini-e-pagamenti-gateway:0.0.3
@@ -155,3 +196,4 @@ volumes:
     external: true
     name: mysql_volume
   loki_logs_volume:
+  grafana_volume:

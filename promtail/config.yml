@@ -1,0 +1,32 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0  # Mettiamo 0 per spegnere il canale gRPC (comunicazione avanzata) perché non ci serve
+
+# Questo blocco serve a evitare che Promtail impazzisca quando si riavvia
+positions:
+  filename: /tmp/positions.yaml # Promtail crea questo file temporaneo. Dentro ci scrive: "Sono arrivato a leggere la riga X del file Y".
+    # Se spegni il PC e lo riaccendi, Promtail legge questo file e ricomincia esattamente da dove aveva lasciato,
+  # evitando di rispedire a Loki milioni di log vecchi che hai già visto
+
+# Qui indichiamo a Promtail chi è il destinatario dei log raccolti
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    # Questo è l'indirizzo di Loki (usando il dns di docker)."3100" è la porta standard di Loki.
+    # "/loki/api/v1/push" è la "porta sul retro" che Loki tiene aperta per ricevere i log dagli agenti come Promtail
+
+# Dice a Promtail cosa cercare e che etichette usare
+scrape_configs:
+  - job_name: log-microservizi
+
+    static_configs:
+      - targets:
+          - localhost # Dice a Promtail che i file da leggere si trovano nel suo stesso container. Questo è possibile perchè gli ordini e promtail usano lo stesso volume
+
+        # Loki non divide i log in modo ordinato.
+        # Per non fare confusione, Promtail mette dei "tag" a ogni riga di log prima di spedirla
+        labels:
+          job: gestione-ordini  # Su Grafana ti basterà cercare job="gestione-ordini" per vedere solo i log di questa app
+
+          # Guarda dentro la cartella /var/log/apps/ del tuo container (che coincide col volume)
+          # L'asterisco (*.log) significa: "Prendi qualsiasi file che finisce con .log"
+          __path__: /var/log/apps/*.log
