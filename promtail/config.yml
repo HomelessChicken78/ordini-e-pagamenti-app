@@ -30,3 +30,15 @@ scrape_configs:
           # Guarda dentro la cartella /var/log/apps/ del tuo container (che coincide col volume)
           # L'asterisco (*.log) significa: "Prendi qualsiasi file che finisce con .log"
           __path__: /var/log/apps/*.log
+
+    # Senza questo quello che succede è che promtail prende la stringa del json (fatta da java) e la passa a loki.
+    # Ma non faceva il parsing del json
+    pipeline_stages:
+      - json:
+          expressions:
+            level: "log.level"
+            message: message
+            logger: loggerName
+
+      - labels:
+          level:
