@@ -138,7 +138,7 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - REPORTS_TEMPLATE_DIR=/app/reports/template/
-      - REPORTS_TEMPLATE_FILENAME=order-payment-receipt.jrxml
+      - REPORTS_TEMPLATE_FILENAME=order-payment-receipt
       #- LOG_ROOT_LEVEL=DEBUG
     networks:
       - ordini-pagamenti
