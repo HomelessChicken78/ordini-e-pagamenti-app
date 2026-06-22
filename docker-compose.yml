@@ -137,6 +137,7 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - REPORTS_TEMPLATE_PATH=/app/reports/template/order-payment-receipt.jrxml
       #- LOG_ROOT_LEVEL=DEBUG
     networks:
       - ordini-pagamenti
