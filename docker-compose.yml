@@ -139,6 +139,11 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - REPORTS_TEMPLATE_DIR=/app/reports/template/
       - REPORTS_TEMPLATE_FILENAME=order-payment-receipt
+      - BUCKET_S3_NAME=its-s3-demo-551656632325-eu-south-1-an
+      - BUCKET_ROOT_PREFIX=c.coccia
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=eu-south-1
       #- LOG_ROOT_LEVEL=DEBUG
     networks:
       - ordini-pagamenti
