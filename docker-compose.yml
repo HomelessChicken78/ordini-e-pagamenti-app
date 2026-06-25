@@ -2,8 +2,8 @@ services:
   db:
     image: mysql:8.0.45
     container_name: mysql-container
-    ports:
-      - "3307:3306"
+    #ports:
+    #  - "3307:3306"
     volumes:
       - mysql_volume:/var/lib/mysql
     environment:
