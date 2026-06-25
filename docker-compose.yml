@@ -122,7 +122,7 @@ services:
 
   ordini:
     build: ./ordini
-    image: homelesschicken/gestione-ordini:0.0.5
+    image: homelesschicken/gestione-ordini:0.0.6
     container_name: gestione-ordini-container
     #ports:
     #  - "8081:8080"
