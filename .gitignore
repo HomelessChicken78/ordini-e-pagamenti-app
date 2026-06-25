@@ -1,5 +1,6 @@
 .env
 *.jasper
+secrets/
 
 ### IntelliJ IDEA ###
 .idea
