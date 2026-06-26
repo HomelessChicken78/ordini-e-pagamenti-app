@@ -84,6 +84,7 @@ services:
       - AUTH_HOST=ordini-pagamenti-auth-container
       - AUTH_PORT=8080
       - PATH_AUTH=api/auth
+      - PATH_RECEIPTS=api/receipts
     networks:
       - ordini-pagamenti
     depends_on:
